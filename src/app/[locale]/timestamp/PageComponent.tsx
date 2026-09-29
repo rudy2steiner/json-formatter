@@ -5,7 +5,6 @@ import { FiRepeat } from 'react-icons/fi';
 import Header from '~/components/Header';
 import Footer from '~/components/Footer';
 import HeadInfo from '~/components/HeadInfo';
-import { Container } from './styles';
 
 type EpochUnit = 'auto' | 's' | 'ms' | 'us' | 'ns';
 
@@ -143,11 +142,11 @@ const PageComponent = ({
         page={'/timestamp'}
       />
       <Header locale={locale} page={'timestamp'} indexLanguageText={indexLanguageText} />
-      <Container>
-        <header className="mt-10">
+      <div className="flex flex-col items-center">
+        <header className="mb-[60px] mt-10 flex items-center">
           <FiRepeat size={40} color="#F97316" />
-          <div>
-            <h1>{timestampLanguageText.h1}</h1>
+          <div className="ml-4">
+            <h1 className="font-bold">{timestampLanguageText.h1}</h1>
             <h2 className="text-xs">{timestampLanguageText.h2_1}</h2>
           </div>
         </header>
@@ -321,7 +320,7 @@ date -j -r 1800000000`}
             </div>
           </section>
         </div>
-      </Container>
+      </div>
       <Footer
         locale={locale}
         description={indexLanguageText.description}

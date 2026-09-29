@@ -5,8 +5,6 @@ import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {ReactNode} from 'react';
 import {locales} from '~/config';
 import { CommonProvider } from '~/context/common-context';
-import { Analytics } from "@vercel/analytics/react";
-
 const inter = Inter({subsets: ['latin']});
 
 type Props = {
@@ -51,7 +49,6 @@ export default async function LocaleLayout({
     <CommonProvider>
       {children}
     </CommonProvider>
-    <Analytics />
     </body>
     </html>
   );

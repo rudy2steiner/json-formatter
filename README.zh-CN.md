@@ -1,81 +1,52 @@
-# SoraWebui
-SoraWebui 是一个开源项目，允许用户使用 OpenAI 的 Sora 模型使用文本在线生成视频，从而简化视频创建，并具有轻松的一键网站部署功能。
-👉 [SoraWebui](https://sorawebui.com)
+# JSON Formatter
 
-[English](https://github.com/SoraWebui/SoraWebui/blob/main/README.md) | 简体中文 | [日本語](https://github.com/SoraWebui/SoraWebui/blob/main/README.ja-JP.md)
+JSON 格式化、压缩、对比，以及时间戳换算。处理都在浏览器里完成。
 
-# 项目计划
-- ✅ 通过文字生成视频（使用[FakeSoraAPI](https://github.com/SoraWebui/FakeSoraAPI)）:
+站点：[jsonformatter.cn](https://jsonformatter.cn)
 
-  您可以在 👉 [main](https://github.com/SoraWebui/SoraWebui/tree/main) 或 👉 [version-0.1](https://github.com/SoraWebui/SoraWebui/tree/version-0.1) 中体验该功能
+[English](./README.md) | 简体中文 | [日本語](./README.ja-JP.md)
 
-- ✅ 使用谷歌登录:
+## 功能
 
-  您可以在 👉 [login](https://github.com/SoraWebui/SoraWebui/tree/login) 或 👉 [version-0.2](https://github.com/SoraWebui/SoraWebui/tree/version-0.2) 中体验该功能
+- 格式化、压缩、左右对比
+- 上传、下载、清空、示例数据、自动格式化
+- 折叠 JSON 数组时显示 `Array[n]`
+- 时间戳与本地时间互转，支持秒、毫秒、微秒、纳秒
+- 语言：简体中文（默认，路径无前缀）、English、日本語、한국어、Português、Deutsch
 
-- ✅ Google 一键登录:
+## 本地运行
 
-  您可以在 👉 [login](https://github.com/SoraWebui/SoraWebui/tree/login) 或 👉 [version-0.3](https://github.com/SoraWebui/SoraWebui/tree/version-0.3) 中体验该功能
-
-- [ ] Stripe支付：
-
-  即将推出
-
-- [ ] 添加 OpenAI 的 Sora API：
-
-  等待 OpenAI 开放 Sora 的 API，随后我们就会推出该功能.
-
-
-## 快速开始
-
-### 在 Vercel 上部署
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FSoraWebui%2FSoraWebui&project-name=SoraWebui&repository-name=SoraWebui&external-id=https%3A%2F%2Fgithub.com%2FSoraWebui%2FSoraWebui%2Ftree%2Fmain)
-
-### 1. 克隆项目
+依赖安装需要 `--legacy-peer-deps`（Fluent UI 和 React 19 的 peer 声明对不上）。不要用 cnpm，它会把 `node_modules/.bin` 拷成文件，Next 会起不来。
 
 ```bash
-git clone git@github.com:SoraWebui/SoraWebui.git
-```
-
-### 2. 安装依赖
-
-```bash
-cd SoraWebui && yarn
-#or
-cd SoraWebui && npm install
-#or
-cd SoraWebui && pnpm install
-```
-
-### 3. 复制 .env.example 并将其重命名为 .env.local
-
-```bash
-# website URL
-NEXT_PUBLIC_SITE_URL=http://localhost
-
-# openai config
-OPENAI_API_KEY=sk-XXXXXX
-OPENAI_API_BASE_URL=http://localhost:8081
-OPENAI_API_MODEL=sora-1.0-turbo
-```
-
-### 4. 运行
-
-```bash
-yarn dev
-#or
+git clone git@github.com:rudy2steiner/json-formatter.git
+cd json-formatter
+npm install --legacy-peer-deps
 npm run dev
-#or
-pnpm dev
 ```
 
-### 4. 在浏览器打开 [http://localhost](http://localhost)
-![success_deploy.jpg](https://sorawebui.com/success_deploy.jpg)
+开发服务监听 [http://localhost](http://localhost)（80 端口）。macOS 上绑 80 端口通常要管理员权限。
 
+## 部署
 
-# 重要事项
-SoraWebui 需要 [FakeSoraAPI](https://github.com/SoraWebui/FakeSoraAPI) 才能正常运行。
+部署目标是 Cloudflare Workers，走 [OpenNext](https://opennext.js.org/cloudflare)。
 
-## Star History
+```bash
+npx wrangler login
+npm run deploy
+```
 
-[![Star History Chart](https://api.star-history.com/svg?repos=SoraWebui/SoraWebui&type=Date)](https://star-history.com/#SoraWebui/SoraWebui&Date)
+`npm run preview` 会先构建，再用 wrangler 在本地跑 Worker。
+
+## Monaco
+
+页面加载的是 `public/monaco` 里只含 JSON 的编辑器包，不是完整的 `/vs`。改了 `src/lib/monaco-entry.ts` 之后执行：
+
+```bash
+npm run build:monaco
+```
+
+## 加一种语言
+
+1. 在 `messages/` 里补上对应文案
+2. 把 locale 加进 `src/config.ts` 和 `src/middleware.ts`

@@ -6,8 +6,12 @@ const withNextIntl = createNextIntlPlugin('./src/i18n.ts');
 import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare';
 initOpenNextCloudflareForDev();
 
+const isDevServer = process.env.NODE_ENV === 'development';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    // Keep `next dev` out of `.next` so a production build can run beside it.
+    distDir: isDevServer ? '.next-dev' : '.next',
     eslint: {
         ignoreDuringBuilds: true,
     },

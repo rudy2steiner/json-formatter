@@ -4,6 +4,8 @@ export const locales = ['en', 'zh', 'ko', 'ja','pt','de'] as const;
 
 export const defaultLocale = 'zh';
 
+export const repositoryUrl = 'https://github.com/rudy2steiner/json-formatter';
+
 export const languages = [
   {
     code: "en-US",

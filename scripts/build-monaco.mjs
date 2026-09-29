@@ -11,6 +11,10 @@ await build({
   minify: true,
   format: 'iife',
   outfile: `${outdir}/editor.js`,
+  loader: {
+    '.css': 'empty',
+    '.ttf': 'empty',
+  },
 });
 
 await build({

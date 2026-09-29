@@ -1,82 +1,52 @@
-# SoraWebui
-SoraWebui は、ユーザーがテキストを使って OpenAI の Sora モデルでオンラインビデオを生成できるようにすることで、ビデオ作成を簡素化するオープンソースプロジェクトです。
-👉 [SoraWebui](https://sorawebui.com)
+# JSON Formatter
 
-[English](https://github.com/SoraWebui/SoraWebui/blob/main/README.md) | [简体中文](https://github.com/SoraWebui/SoraWebui/blob/main/README.zh-CN.md) | 日本語
+JSON の整形、圧縮、比較と、タイムスタンプ変換。処理はブラウザ内で完結する。
 
+サイト：[jsonformatter.cn](https://jsonformatter.cn)
 
-# プロジェクトプラン
-- ✅ 単語で動画を生成 ([FakeSoraAPI](https://github.com/SoraWebui/FakeSoraAPI) を使用):
+[English](./README.md) | [简体中文](./README.zh-CN.md) | 日本語
 
-  この機能は、👉 [main](https://github.com/SoraWebui/SoraWebui/tree/main) または 👉 [version-0.1](https://github.com/SoraWebui/SoraWebui/tree/version-0.1) で見ることができます
+## 機能
 
-- ✅ Google でログイン:
+- 整形、圧縮、左右比較
+- アップロード、ダウンロード、クリア、サンプルデータ、自動整形
+- 折りたたんだ JSON 配列は `Array[n]` と表示する
+- タイムスタンプとローカル時刻の相互変換。秒、ミリ秒、マイクロ秒、ナノ秒
+- 言語：简体中文（デフォルト、パスにプレフィックスなし）、English、日本語、한국어、Português、Deutsch
 
-  この機能は、👉 [login](https://github.com/SoraWebui/SoraWebui/tree/login) または 👉 [version-0.2](https://github.com/SoraWebui/SoraWebui/tree/version-0.2) で見ることができます
+## ローカル起動
 
-- ✅ Google ワンクリックログイン:
-
-  この機能は、👉 [login](https://github.com/SoraWebui/SoraWebui/tree/login) または 👉 [version-0.3](https://github.com/SoraWebui/SoraWebui/tree/version-0.3) で見ることができます
-
-- [ ] Stripe 決済：
-
-  準備中
-
-- [ ] OpenAI の Sora API を追加する：
-
-  OpenAI が Sora の API を起動するのを待ってから、この機能を起動します。
-
-
-## クイックスタート
-
-### Vercel でデプロイ
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FSoraWebui%2FSoraWebui&project-name=SoraWebui&repository-name=SoraWebui&external-id=https%3A%2F%2Fgithub.com%2FSoraWebui%2FSoraWebui%2Ftree%2Fmain)
-
-### 1. プロジェクトをクローン
+依存関係は `--legacy-peer-deps` で入れる（Fluent UI と React 19 の peer 宣言が合わない）。cnpm は使わない。`node_modules/.bin` をコピーしてしまい、Next が起動しなくなる。
 
 ```bash
-git clone git@github.com:SoraWebui/SoraWebui.git
-```
-
-### 2. 依存関係をインストール
-
-```bash
-cd SoraWebui && yarn
-#もしくは
-cd SoraWebui && npm install
-#もしくは
-cd SoraWebui && pnpm install
-```
-
-### 3. .env.example をコピーし、.env.local にリネームする
-
-```bash
-# web サイト URL
-NEXT_PUBLIC_SITE_URL=http://localhost
-
-# openai 設定
-OPENAI_API_KEY=sk-XXXXXX
-OPENAI_API_BASE_URL=http://localhost:8081
-OPENAI_API_MODEL=sora-1.0-turbo
-```
-
-### 4. 実行
-
-```bash
-yarn dev
-#もしくは
+git clone git@github.com:rudy2steiner/json-formatter.git
+cd json-formatter
+npm install --legacy-peer-deps
 npm run dev
-#もしくは
-pnpm dev
 ```
 
-### 5. [http://localhost](http://localhost) をブラウザで開いてご覧ください。
-![success_deploy.jpg](https://sorawebui.com/success_deploy.jpg)
+開発サーバーは [http://localhost](http://localhost)（ポート 80）。macOS で 80 番を使うには管理者権限が要ることが多い。
 
+## デプロイ
 
-# 重要
-SoraWebui が正しく機能するには [FakeSoraAPI](https://github.com/SoraWebui/FakeSoraAPI) が必要です。
+Cloudflare Workers へ、[OpenNext](https://opennext.js.org/cloudflare) 経由で出す。
 
-## Star History
+```bash
+npx wrangler login
+npm run deploy
+```
 
-[![Star History Chart](https://api.star-history.com/svg?repos=SoraWebui/SoraWebui&type=Date)](https://star-history.com/#SoraWebui/SoraWebui&Date)
+`npm run preview` はビルドしたあと、wrangler で Worker をローカル実行する。
+
+## Monaco
+
+ページが読むのは `public/monaco` の JSON 専用バンドルで、フルの `/vs` ではない。`src/lib/monaco-entry.ts` を変えたら次を実行する。
+
+```bash
+npm run build:monaco
+```
+
+## 言語を足す
+
+1. `messages/` に翻訳を追加する
+2. `src/config.ts` と `src/middleware.ts` に locale を登録する

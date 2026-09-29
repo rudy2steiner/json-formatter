@@ -1,25 +1,26 @@
 'use client'
-import {useState} from 'react'
-import {Dialog} from '@headlessui/react'
-import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/outline'
-import {GlobeAltIcon} from '@heroicons/react/24/outline'
-import {Fragment} from 'react'
-import {Menu, Transition} from '@headlessui/react'
+import {Fragment, useState} from 'react'
+import {Dialog, Menu, Transition} from '@headlessui/react'
+import {Bars3Icon, GlobeAltIcon, XMarkIcon} from '@heroicons/react/24/outline'
 import {ChevronDownIcon} from '@heroicons/react/20/solid'
 import Link from "next/link";
-import {languages, localizedPath} from "~/config";
+import {languages, localizedPath, repositoryUrl} from "~/config";
 import {useCommonContext} from '~/context/common-context'
 import LoadingModal from "./LoadingModal";
 import Image from "next/image";
 import GeneratingModal from "~/components/GeneratingModal";
 
-const navigation = {
-  topMenu: [
-    {name: 'JSON Formatter', href: '/json-formatter'},
-    {name: 'Timestamp', href: '/timestamp'}
-  ],
-  social: [
-  ]
+const navigation = [
+  {name: 'JSON Formatter', href: '/json-formatter'},
+  {name: 'Timestamp', href: '/timestamp'}
+]
+
+function GitHubIcon({className}) {
+  return (
+    <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" className={className}>
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+    </svg>
+  );
 }
 
 export default function Header({
@@ -28,7 +29,6 @@ export default function Header({
                                  indexLanguageText
                                }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const {setShowGeneratingModal} = useCommonContext();
   const {setShowLoadingModal} = useCommonContext();
 
   const checkLocalAndLoading = (lang) => {
@@ -66,7 +66,7 @@ export default function Header({
           </button>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
-          {navigation.topMenu.map((item) => (
+          {navigation.map((item) => (
             <a
               key={item.name}
               href={localizedPath(locale, item.href)}
@@ -76,13 +76,16 @@ export default function Header({
             </a>
           ))}
         </div>
-        <div className="flex flex-1 justify-end mr-2">
-          {navigation.social.map((item) => (
-            <a key={item.name} href={item.href} className="text-gray-500 hover:text-gray-400">
-              <span className="sr-only">{item.name}</span>
-              <item.icon className="h-6 w-6" aria-hidden="true"/>
-            </a>
-          ))}
+        <div className="flex flex-1 justify-end">
+          <a
+            href={repositoryUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="GitHub"
+            className="mr-3 inline-flex items-center text-white/90 hover:text-white"
+          >
+            <GitHubIcon className="h-5 w-5"/>
+          </a>
         </div>
         <Menu as="div" className="relative inline-block text-left">
           <div>
@@ -136,10 +139,10 @@ export default function Header({
             <a href={localizedPath(locale)} className="-m-1.5 ml-0.5 p-1.5" onClick={() => setShowLoadingModal(true)}>
               <Image
                 className="h-8 w-auto"
-                src="/sorawebui.svg"
-                width={32}
-                height={24}
-                alt="sorawebui.com"/>
+                src="/jsonformatter.svg"
+                width={732}
+                height={74}
+                alt="JSON Formatter"/>
             </a>
             <button
               type="button"
@@ -153,7 +156,7 @@ export default function Header({
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                {navigation.topMenu.map((item) => (
+                {navigation.map((item) => (
                   <a
                     key={item.name}
                     href={localizedPath(locale, item.href)}
@@ -163,6 +166,17 @@ export default function Header({
                     {item.name}
                   </a>
                 ))}
+              </div>
+              <div className="py-6">
+                <a
+                  href={repositoryUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="GitHub"
+                  className="inline-flex items-center text-base font-semibold text-gray-900 hover:text-blue-500"
+                >
+                  <GitHubIcon className="h-5 w-5"/>
+                </a>
               </div>
             </div>
           </div>

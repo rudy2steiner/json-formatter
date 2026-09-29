@@ -8,6 +8,7 @@ import {useInterval} from "ahooks";
 import Link from "next/link";
 import Script from 'next/script'
 import { languages,getLanguageByLang,getEditorLocale} from "~/config";
+import {attachJsonArrayFoldSummary} from "~/lib/jsonArrayFoldSummary";
 import {Editor,DiffEditor,loader} from "@monaco-editor/react";
 import { Stack, IStackStyles } from "@fluentui/react";
 import { ErrorMessageBar } from "~/components/error-message-bar";
@@ -97,9 +98,12 @@ const PageComponent = ({
   }, []);
   function handleEditorDidMount(editor, monaco) {
       editorRef.current = editor;
+      attachJsonArrayFoldSummary(editor);
   }
   function handleDiffEditorDidMount(editor, monaco) {
       diffEditorRef.current = editor;
+      attachJsonArrayFoldSummary(editor.getOriginalEditor());
+      attachJsonArrayFoldSummary(editor.getModifiedEditor());
   }
   function handleExampleEditorDidMount(editor, monaco) {
     console.log('handleEditorDidMount');
@@ -281,6 +285,20 @@ const PageComponent = ({
                         >
                 <link rel="preload" href="/monaco/editor.js" as="script" />
                 <link rel="stylesheet" href="/vs/editor/editor.main.css" />
+                <style>{`
+                  .monaco-editor .view-line:has(.json-array-fold-size) .inline-folded:after {
+                    content: none !important;
+                  }
+                  .monaco-editor .json-array-fold-hide {
+                    font-size: 0 !important;
+                    display: inline-block !important;
+                    width: 0 !important;
+                  }
+                  .monaco-editor .json-array-fold-size {
+                    color: #a626a4;
+                    cursor: pointer;
+                  }
+                `}</style>
                 <Script src="/monaco/editor.js" strategy="afterInteractive" onLoad={markEditorReady} />
                 {editorReady ? (
                 isCompareMode ? (

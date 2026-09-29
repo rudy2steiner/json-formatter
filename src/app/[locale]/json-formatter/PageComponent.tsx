@@ -8,8 +8,7 @@ import {useInterval} from "ahooks";
 import Link from "next/link";
 import Script from 'next/script'
 import { languages,getLanguageByLang,getEditorLocale} from "~/config";
-import * as monaco from 'monaco-editor';
-import {Editor,loader,useMonaco,DiffEditor} from "@monaco-editor/react";
+import {Editor,DiffEditor,loader} from "@monaco-editor/react";
 import { Stack, IStackStyles } from "@fluentui/react";
 import { ErrorMessageBar } from "~/components/error-message-bar";
 import { TitleBar } from "~/components/title-bar";
@@ -33,8 +32,6 @@ const stackStyles: IStackStyles = {
     borderBottom: BorderLine,
   },
 };
-
-loader.config({ paths: { vs: "/vs" } });
 
 const compareSampleOriginal = `{
   "service": "orders",
@@ -88,6 +85,16 @@ const PageComponent = ({
   const [isCompareMode, setIsCompareMode] = useState(false);
   const [compareOriginal, setCompareOriginal] = useState('');
   const [compareModified, setCompareModified] = useState('');
+  const [editorReady, setEditorReady] = useState(false);
+  const markEditorReady = () => {
+    if (window.monaco?.editor) {
+      loader.config({monaco: window.monaco});
+      setEditorReady(true);
+    }
+  };
+  useEffect(() => {
+    markEditorReady();
+  }, []);
   function handleEditorDidMount(editor, monaco) {
       editorRef.current = editor;
   }
@@ -272,7 +279,11 @@ const PageComponent = ({
                             height: `calc(100% - 20vh)`,
                           }}
                         >
-                {isCompareMode ? (
+                <link rel="preload" href="/monaco/editor.js" as="script" />
+                <link rel="stylesheet" href="/vs/editor/editor.main.css" />
+                <Script src="/monaco/editor.js" strategy="afterInteractive" onLoad={markEditorReady} />
+                {editorReady ? (
+                isCompareMode ? (
                   <DiffEditor
                     height="calc(60vh)"
                     language="json"
@@ -290,6 +301,11 @@ const PageComponent = ({
                     onChange={handleEditorChange}
                     onValidate={handleEditorValidation}
                   />
+                )
+                ) : (
+                  <div className="flex items-center justify-center text-sm text-gray-500" style={{height: 'calc(60vh)'}}>
+                    {indexLanguageText.loadingText}
+                  </div>
                 )}
                  </Stack.Item>
                  <Stack.Item

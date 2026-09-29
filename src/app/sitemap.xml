@@ -38,6 +38,16 @@
     <priority>0.80</priority>
   </url>
   <url>
+    <loc>https://jsonformatter.cn/ja</loc>
+    <lastmod>2024-10-27T11:48:44+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://jsonformatter.cn/ko</loc>
+    <lastmod>2024-10-27T11:48:44+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
     <loc>https://jsonformatter.cn/en/json-formatter</loc>
     <lastmod>2024-10-27T11:48:44+00:00</lastmod>
     <priority>0.64</priority>
@@ -64,6 +74,26 @@
   </url>
   <url>
     <loc>https://jsonformatter.cn/de/timestamp</loc>
+    <lastmod>2024-10-27T11:48:44+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://jsonformatter.cn/ja/json-formatter</loc>
+    <lastmod>2024-10-27T11:48:44+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://jsonformatter.cn/ja/timestamp</loc>
+    <lastmod>2024-10-27T11:48:44+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://jsonformatter.cn/ko/json-formatter</loc>
+    <lastmod>2024-10-27T11:48:44+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://jsonformatter.cn/ko/timestamp</loc>
     <lastmod>2024-10-27T11:48:44+00:00</lastmod>
     <priority>0.64</priority>
   </url>

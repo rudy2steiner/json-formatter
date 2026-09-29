@@ -40,6 +40,8 @@ export default function Footer({
                 <a href="/en" className="inline-block font-normal text-white transition hover:text-blue-600 sm:pr-1 lg:pr-6 py-1.5 sm:py-2 pr-1">English</a>
                 <a href="/pt" className="inline-block font-normal text-white transition hover:text-blue-600 sm:pr-1 lg:pr-6 py-1.5 sm:py-2 pr-1">Português</a>
                 <a href="/de" className="inline-block font-normal text-white transition hover:text-blue-600 sm:pr-1 lg:pr-6 py-1.5 sm:py-2 pr-1">Deutsch</a>
+                <a href="/ja" className="inline-block font-normal text-white transition hover:text-blue-600 sm:pr-1 lg:pr-6 py-1.5 sm:py-2 pr-1">日本語</a>
+                <a href="/ko" className="inline-block font-normal text-white transition hover:text-blue-600 sm:pr-1 lg:pr-6 py-1.5 sm:py-2 pr-1">한국어</a>
           </div>
           </div>
           <div className="mt-2 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">

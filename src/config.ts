@@ -24,7 +24,17 @@ export const languages = [
     code: "de",
     lang: "de",
     language: "Deutsch",
-   }
+   },
+  {
+    code: "ja",
+    lang: "ja",
+    language: "日本語",
+  },
+  {
+    code: "ko",
+    lang: "ko",
+    language: "한국어",
+  },
 ]
 
 export const pathnames = {
